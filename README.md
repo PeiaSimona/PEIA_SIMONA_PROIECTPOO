@@ -1,12 +1,13 @@
-// PEIA FLORENTINA SIMONA PROIECT POO
+// Peia Florentina Simona proiect POO
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
 #include<fstream>
 #include<string>
-// domeniul ales este plafar
+// domeniu ales este plafar
 
 
-class InterfataMedicament{
+class InterfataMedicament {
 
 public:
 	virtual void afisareTipMedicament() = 0;
@@ -15,14 +16,14 @@ public:
 };
 
 
-class Medicament: public InterfataMedicament
+class Medicament : public InterfataMedicament
 {
 
 private:
 
 	static int contor;
 	const int id;
-	char * denumire;
+	char* denumire;
 	float   pret;
 
 public:
@@ -33,9 +34,9 @@ public:
 
 	}
 
-	friend istream& operator>>(istream & in, Medicament & m){
+	friend istream& operator>>(istream& in, Medicament& m) {
 		cout << "Da nume: ";
-		 
+
 		char buffer[200];
 		in >> buffer;
 		m.setDenumire(buffer);
@@ -46,23 +47,23 @@ public:
 		return in;
 	}
 
-	friend ifstream& operator>>(ifstream & in, Medicament & m){
-		 
+	friend ifstream& operator>>(ifstream& in, Medicament& m) {
+
 		char buffer[200];
 		in >> buffer;
 		m.setDenumire(buffer);
 
-	 
+
 		in >> m.pret;
 
 		return in;
 	}
 
-	friend ofstream& operator<<(ofstream& out, Medicament m){
+	friend ofstream& operator<<(ofstream& out, Medicament m) {
 
-		out   << m.denumire << endl;
-	 
-		out  << m.pret   << endl;
+		out << m.denumire << endl;
+
+		out << m.pret << endl;
 
 		return out;
 	}
@@ -70,7 +71,7 @@ public:
 
 
 	//operatori 
-	friend ostream& operator<<(ostream& out, Medicament m){
+	friend ostream& operator<<(ostream& out, Medicament m) {
 
 		out << "Denumire: " << m.denumire << endl;
 		out << "ID " << m.id << endl;
@@ -79,18 +80,18 @@ public:
 		return out;
 	}
 
-	Medicament operator +(float p){
+	Medicament operator +(float p) {
 		Medicament c = *this;
 		c.pret += p;
 		return c;
 	}
 
-	Medicament& operator++(){
+	Medicament& operator++() {
 		this->pret += 1;
 		return *this;
 	}
 
-	void operator()(float p){
+	void operator()(float p) {
 		this->pret += p;
 	}
 
@@ -99,23 +100,23 @@ public:
 
 	//set 
 
-	static void setContor(int c){
-		if (c >= 0){
+	static void setContor(int c) {
+		if (c >= 0) {
 			Medicament::contor = c;
 		}
 	}
 
 	void setDenumire(const char* den)
 	{
-		if (strlen(den) > 2){
+		if (strlen(den) > 2) {
 			delete[] this->denumire;
 			this->denumire = new char[strlen(den) + 1];
 			strcpy(this->denumire, den);
 		}
 	}
 
-	void setPret(float p){
-		if (p >= 0){
+	void setPret(float p) {
+		if (p >= 0) {
 			this->pret = p;
 		}
 	}
@@ -123,20 +124,20 @@ public:
 
 	// get 
 
-	char* getDenumire(){
+	char* getDenumire() {
 		return this->denumire;
 	}
 
-	float getPret(){
+	float getPret() {
 		return this->pret;
 	}
 
-	int getId(){
+	int getId() {
 		return this->id;
 	}
 
 
-	static int getNrMedicamente(){
+	static int getNrMedicamente() {
 		return Medicament::contor;
 	}
 
@@ -179,7 +180,7 @@ public:
 
 
 
-	Medicament&operator=(const Medicament& s)
+	Medicament& operator=(const Medicament& s)
 	{
 		delete[] this->denumire;
 		this->denumire = new char[strlen(s.denumire) + 1];
@@ -190,13 +191,13 @@ public:
 
 
 
-	void afisare(){
+	void afisare() {
 		cout << "ID " << this->id << endl;
 		cout << "Denumire: " << this->denumire << endl;
 		cout << "Pret " << this->pret << endl;
 	}
 
-	~Medicament(){
+	~Medicament() {
 		contor--;
 		delete[] this->denumire;
 	}
@@ -205,58 +206,58 @@ public:
 };
 int Medicament::contor = 0;
 
-void setMarestePret(Medicament& m, float marire){
+void setMarestePret(Medicament& m, float marire) {
 	m.pret += marire;
 }
 
 
 
 // faza 7 
-class MedicamentCompensat:public Medicament
+class MedicamentCompensat :public Medicament
 {
 
-	float valoareCompensata = 0 ;
+	float valoareCompensata = 0;
 
 public:
 
-	  void afisareTipMedicament() {
+	void afisareTipMedicament() {
 
-		cout << "Acesta e un medicament compensat cu reducere de "<< valoareCompensata<< " ron" << endl;
+		cout << "Acesta e un medicament compensat cu reducere de " << valoareCompensata << " ron" << endl;
 
 	}
 
 
-	void setValCom(float p){
-		if (p){
+	void setValCom(float p) {
+		if (p) {
 			this->valoareCompensata = p;
 		}
 	}
-	float getValComp(){
+	float getValComp() {
 		return valoareCompensata;
 	}
 
-	MedicamentCompensat(){
+	MedicamentCompensat() {
 
 	}
 
-	MedicamentCompensat(const char* den, float p, float c) :Medicament(den,p)
+	MedicamentCompensat(const char* den, float p, float c) :Medicament(den, p)
 	{
 		valoareCompensata = c;
 	}
 
-	MedicamentCompensat(const MedicamentCompensat & m) :Medicament( m)
+	MedicamentCompensat(const MedicamentCompensat& m) :Medicament(m)
 	{
 		valoareCompensata = m.valoareCompensata;
 	}
 
-	MedicamentCompensat & operator= (const MedicamentCompensat & m) 
+	MedicamentCompensat& operator= (const MedicamentCompensat& m)
 	{
 		Medicament::operator=(m);
 		valoareCompensata = m.valoareCompensata;
 		return *this;
 	}
 
-	~MedicamentCompensat(){
+	~MedicamentCompensat() {
 
 	}
 
@@ -272,14 +273,14 @@ class ListaMedicamente
 	const int id;
 	string numePacient;
 	int nrMedicamente;
-	Medicament * medicamente;
+	Medicament* medicamente;
 
 public:
-	friend ostream & operator<<(ostream & out, ListaMedicamente & sursa){
+	friend ostream& operator<<(ostream& out, ListaMedicamente& sursa) {
 
 		out << "Nume  : " << sursa.numePacient << endl;
 		out << "nr mediecamente " << sursa.nrMedicamente << endl;
-		for (int i = 0; i < sursa.nrMedicamente; i++){
+		for (int i = 0; i < sursa.nrMedicamente; i++) {
 			out << sursa.medicamente[i] << endl;
 		}
 		return  out;
@@ -287,11 +288,11 @@ public:
 
 
 
- 
-	ListaMedicamente& operator+=(Medicament  m){
 
-		Medicament * vn = new Medicament[this->nrMedicamente + 1];
-		for (int i = 0; i < this->nrMedicamente; i++){
+	ListaMedicamente& operator+=(Medicament  m) {
+
+		Medicament* vn = new Medicament[this->nrMedicamente + 1];
+		for (int i = 0; i < this->nrMedicamente; i++) {
 			vn[i] = this->medicamente[i];
 		}
 		vn[this->nrMedicamente] = m;
@@ -301,16 +302,16 @@ public:
 
 		return *this;
 	}
- 
-	ListaMedicamente operator++(){
+
+	ListaMedicamente operator++() {
 		ListaMedicamente copie = *this;
 
-		this->operator+=(Medicament()); 
+		this->operator+=(Medicament());
 		return copie;
 	}
 
 
-	friend istream& operator>>(istream& in, ListaMedicamente & sursa){
+	friend istream& operator>>(istream& in, ListaMedicamente& sursa) {
 
 		cout << "da numele: ";
 		in >> sursa.numePacient;
@@ -318,8 +319,8 @@ public:
 		in >> sursa.nrMedicamente;
 		delete[] sursa.medicamente;
 		sursa.medicamente = new Medicament[sursa.nrMedicamente];
-		for (int i = 0; i < sursa.nrMedicamente; i++){
- 
+		for (int i = 0; i < sursa.nrMedicamente; i++) {
+
 			in >> sursa.medicamente[i];
 		}
 
@@ -328,56 +329,56 @@ public:
 	}
 
 
-	Medicament & operator[](int i){
-		if (i >= 0 && i <= this->nrMedicamente){
+	Medicament& operator[](int i) {
+		if (i >= 0 && i <= this->nrMedicamente) {
 
 			return this->medicamente[i];
 		}
-		else{
+		else {
 			throw new exception();//am lansat o exceptie daca indexul e gresit, practic se intrerupe din executie codul
 		}
 	}
 
- 
 
-	void setNume(string n){
-		if (n.length() > 2){
+
+	void setNume(string n) {
+		if (n.length() > 2) {
 			this->numePacient = n;
 		}
 	}
 
-	void setNrLuni(int n, Medicament* b){
-		if (n > 0 && b != NULL){
+	void setNrLuni(int n, Medicament* b) {
+		if (n > 0 && b != NULL) {
 			this->nrMedicamente = n;
 			delete[] this->medicamente;
 			this->medicamente = new Medicament[n];
-			for (int i = 0; i < n; i++){
+			for (int i = 0; i < n; i++) {
 				this->medicamente[i] = b[i];
 			}
 		}
 	}
 
 	//get
-	int getNMedicamente(){
+	int getNMedicamente() {
 		return this->nrMedicamente;
 
 	}
 
-	Medicament * getMedicamente(){
+	Medicament* getMedicamente() {
 		return this->medicamente;
 	}
 
- 
-	string getNume(){
+
+	string getNume() {
 		return this->numePacient;
 	}
 
- 
 
-	~ListaMedicamente(){
+
+	~ListaMedicamente() {
 		delete[] this->medicamente;
 	}
- 
+
 
 	ListaMedicamente() :id(0)
 	{
@@ -388,12 +389,12 @@ public:
 	}
 
 
-	ListaMedicamente(int idd, string num, int nr , Medicament* bo) :id(idd)
+	ListaMedicamente(int idd, string num, int nr, Medicament* bo) :id(idd)
 	{
 		this->numePacient = num;
-		this->nrMedicamente = nr ;
-		this->medicamente = new Medicament[nr ];
-		for (int i = 0; i < nr ; i++){
+		this->nrMedicamente = nr;
+		this->medicamente = new Medicament[nr];
+		for (int i = 0; i < nr; i++) {
 			this->medicamente[i] = bo[i];
 		}
 
@@ -403,56 +404,56 @@ public:
 		this->numePacient = s.numePacient;
 		this->nrMedicamente = s.nrMedicamente;
 		this->medicamente = new Medicament[s.nrMedicamente];
-		for (int i = 0; i < s.nrMedicamente; i++){
+		for (int i = 0; i < s.nrMedicamente; i++) {
 			this->medicamente[i] = s.medicamente[i];
 		}
 
 	}
 
 
-	ListaMedicamente& operator= (const ListaMedicamente& s)  
+	ListaMedicamente& operator= (const ListaMedicamente& s)
 	{
 		delete[] this->medicamente;
 		this->numePacient = s.numePacient;
 		this->nrMedicamente = s.nrMedicamente;
 		this->medicamente = new Medicament[s.nrMedicamente];
-		for (int i = 0; i < s.nrMedicamente; i++){
+		for (int i = 0; i < s.nrMedicamente; i++) {
 			this->medicamente[i] = s.medicamente[i];
 		}
 		return *this;
 	}
 
 
-	 
+
 
 
 };
 
 
-// Has a cu pointeri ... faza 8 
+// faza 8 
 class ListaMedicamentePointeri
 {
 	const int id;
 	string numePacient;
 	int nrMedicamente;
-	Medicament ** medicamente;
+	Medicament** medicamente;
 
 public:
-	friend ostream & operator<<(ostream & out, ListaMedicamentePointeri & sursa){
+	friend ostream& operator<<(ostream& out, ListaMedicamentePointeri& sursa) {
 
 		out << "Nume  : " << sursa.numePacient << endl;
 		out << "nr mediecamente " << sursa.nrMedicamente << endl;
-		for (int i = 0; i < sursa.nrMedicamente; i++){
+		for (int i = 0; i < sursa.nrMedicamente; i++) {
 			out << *(sursa.medicamente[i]) << endl;
 		}
 		return  out;
 	}
 
-  
- 
 
 
-	~ListaMedicamentePointeri(){
+
+
+	~ListaMedicamentePointeri() {
 		delete[] this->medicamente;
 	}
 
@@ -470,8 +471,8 @@ public:
 	{
 		this->numePacient = num;
 		this->nrMedicamente = nr;
-		this->medicamente = new Medicament*[nr];
-		for (int i = 0; i < nr; i++){
+		this->medicamente = new Medicament * [nr];
+		for (int i = 0; i < nr; i++) {
 			this->medicamente[i] = bo[i];
 		}
 
@@ -480,21 +481,21 @@ public:
 	{
 		this->numePacient = s.numePacient;
 		this->nrMedicamente = s.nrMedicamente;
-		this->medicamente = new Medicament*[s.nrMedicamente];
-		for (int i = 0; i < s.nrMedicamente; i++){
+		this->medicamente = new Medicament * [s.nrMedicamente];
+		for (int i = 0; i < s.nrMedicamente; i++) {
 			this->medicamente[i] = s.medicamente[i];
 		}
 
 	}
 
 
-	ListaMedicamentePointeri& operator= (const ListaMedicamentePointeri & s)
+	ListaMedicamentePointeri& operator= (const ListaMedicamentePointeri& s)
 	{
 		delete[] this->medicamente;
 		this->numePacient = s.numePacient;
 		this->nrMedicamente = s.nrMedicamente;
-		this->medicamente = new Medicament*[s.nrMedicamente];
-		for (int i = 0; i < s.nrMedicamente; i++){
+		this->medicamente = new Medicament * [s.nrMedicamente];
+		for (int i = 0; i < s.nrMedicamente; i++) {
 			this->medicamente[i] = s.medicamente[i];
 		}
 		return *this;
@@ -520,20 +521,20 @@ private:
 	string nume;
 	static string denumireFarmacie;
 	int nrLuni;
-	float * bonusuriPerLuna;
+	float* bonusuriPerLuna;
 
 public:
 
 
-	friend ofstream & operator<<(ofstream & out, Farmacist & sursa){
+	friend ofstream& operator<<(ofstream& out, Farmacist& sursa) {
 
 		int l = sursa.nume.length() + 1;
 		out.write((char*)&l, 4);
-		out.write( sursa.nume.c_str(), l);
+		out.write(sursa.nume.c_str(), l);
 
 		out.write((char*)&sursa.nrLuni, 4);
 
-		for (int i = 0; i < sursa.nrLuni; i++){
+		for (int i = 0; i < sursa.nrLuni; i++) {
 			out.write((char*)&sursa.bonusuriPerLuna[i], 4);
 		}
 
@@ -542,19 +543,19 @@ public:
 	}
 
 
-	friend ifstream& operator>>(ifstream& in, Farmacist & sursa){
+	friend ifstream& operator>>(ifstream& in, Farmacist& sursa) {
 
 		int l = sursa.nume.length() + 1;
 		in.read((char*)&l, 4);
 		char buffer[200];
-		in.read( buffer, l);
+		in.read(buffer, l);
 
 		sursa.setDenumireFarmacie(buffer);
 
 		in.read((char*)&sursa.nrLuni, 4);
 		delete[] sursa.bonusuriPerLuna;
 		sursa.bonusuriPerLuna = new float[sursa.nrLuni];
-		for (int i = 0; i < sursa.nrLuni; i++){
+		for (int i = 0; i < sursa.nrLuni; i++) {
 			in.read((char*)&sursa.bonusuriPerLuna[i], 4);
 		}
 
@@ -566,11 +567,11 @@ public:
 
 
 
-	friend ostream & operator<<(ostream & out, Farmacist & sursa){
+	friend ostream& operator<<(ostream& out, Farmacist& sursa) {
 
 		out << "Nume client: " << sursa.nume << endl;
 		out << "Pucnte " << sursa.nrLuni << endl;
-		for (int i = 0; i < sursa.nrLuni; i++){
+		for (int i = 0; i < sursa.nrLuni; i++) {
 			out << sursa.bonusuriPerLuna[i] << endl;
 		}
 		return  out;
@@ -581,10 +582,10 @@ public:
 
 	// operatori
 	//+= adauga o noua pozitie in vectorul dinamic
-	Farmacist& operator+=(float lunaNoua){
+	Farmacist& operator+=(float lunaNoua) {
 
-		float * vn = new float[this->nrLuni + 1];
-		for (int i = 0; i < this->nrLuni; i++){
+		float* vn = new float[this->nrLuni + 1];
+		for (int i = 0; i < this->nrLuni; i++) {
 			vn[i] = this->bonusuriPerLuna[i];
 		}
 		vn[this->nrLuni] = lunaNoua;
@@ -596,14 +597,14 @@ public:
 	}
 
 	// ++ post incrementare  care adauga o luna default de 100 ron bonus 
-	Farmacist operator++(){
+	Farmacist operator++() {
 		Farmacist copie = *this;
 		this->operator+=(100);//am folosit operatorul precendent pentru a adaugat noua luna 
 		return copie;
 	}
 
 
-	friend istream& operator>>(istream& in, Farmacist & sursa){
+	friend istream& operator>>(istream& in, Farmacist& sursa) {
 
 		cout << "da numele: ";
 		in >> sursa.nume;
@@ -611,7 +612,7 @@ public:
 		in >> sursa.nrLuni;
 		delete[] sursa.bonusuriPerLuna;
 		sursa.bonusuriPerLuna = new float[sursa.nrLuni];
-		for (int i = 0; i < sursa.nrLuni; i++){
+		for (int i = 0; i < sursa.nrLuni; i++) {
 			cout << "Da bonusul din luna " << i + 1 << ": ";
 			in >> sursa.bonusuriPerLuna[i];
 		}
@@ -621,73 +622,73 @@ public:
 	}
 
 
-	float & operator[](int i){
-		if (i >= 0 && i <= this->nrLuni){
+	float& operator[](int i) {
+		if (i >= 0 && i <= this->nrLuni) {
 
 			return this->bonusuriPerLuna[i];
 		}
-		else{
+		else {
 			throw new exception();//am lansat o exceptie daca indexul e gresit, practic se intrerupe din executie codul
 		}
 	}
 
 
 
-	static void setDenumireFarmacie(string  d){
-		if (d.length() >= 2){
+	static void setDenumireFarmacie(string  d) {
+		if (d.length() >= 2) {
 			Farmacist::denumireFarmacie = d;
 		}
 	}
 
-	void setNume(string n){
-		if (n.length() > 2){
+	void setNume(string n) {
+		if (n.length() > 2) {
 			this->nume = n;
 		}
 	}
 
-	void setNrLuni(int n, float* b){
-		if (n > 0 && b != NULL){
+	void setNrLuni(int n, float* b) {
+		if (n > 0 && b != NULL) {
 			this->nrLuni = n;
 			delete[] this->bonusuriPerLuna;
 			this->bonusuriPerLuna = new float[n];
-			for (int i = 0; i < n; i++){
+			for (int i = 0; i < n; i++) {
 				this->bonusuriPerLuna[i] = b[i];
 			}
 		}
 	}
 
 	//get
-	int getNrLuni(){
+	int getNrLuni() {
 		return this->nrLuni;
 
 	}
 
-	float * getBonusuri(){
+	float* getBonusuri() {
 		return this->bonusuriPerLuna;
 	}
 
-	static string getFarmacie(){
+	static string getFarmacie() {
 		return Farmacist::denumireFarmacie;
 	}
 
-	string getNume(){
+	string getNume() {
 		return this->nume;
 	}
 
-	void afisare(){
+	void afisare() {
 		cout << "ID " << this->id << endl;
 		cout << "Nume  : " << this->nume << endl;
 		cout << "nr luni  " << this->nrLuni << endl;
-		for (int i = 0; i < this->nrLuni; i++){
+		for (int i = 0; i < this->nrLuni; i++) {
 			cout << "In luna " << i + 1 << " a luat bonus de" << this->bonusuriPerLuna[i] << " RON" << endl;
 		}
 	}
 
-	~Farmacist(){
+	~Farmacist() {
 		delete[] this->bonusuriPerLuna;
 	}
 
-	static void schimbaDenumire(string den){
+	static void schimbaDenumire(string den) {
 		Farmacist::denumireFarmacie = den;
 	}
 
@@ -705,7 +706,7 @@ public:
 		this->nume = num;
 		this->nrLuni = nrl;
 		this->bonusuriPerLuna = new float[nrl];
-		for (int i = 0; i < nrl; i++){
+		for (int i = 0; i < nrl; i++) {
 			this->bonusuriPerLuna[i] = bo[i];
 		}
 
@@ -715,21 +716,21 @@ public:
 		this->nume = s.nume;
 		this->nrLuni = s.nrLuni;
 		this->bonusuriPerLuna = new float[s.nrLuni];
-		for (int i = 0; i < s.nrLuni; i++){
+		for (int i = 0; i < s.nrLuni; i++) {
 			this->bonusuriPerLuna[i] = s.bonusuriPerLuna[i];
 		}
 
 	}
 
 
-	Farmacist&operator=(const Farmacist& s)
+	Farmacist& operator=(const Farmacist& s)
 	{
 
 		delete[] this->bonusuriPerLuna;
 		this->nume = s.nume;
 		this->nrLuni = s.nrLuni;
 		this->bonusuriPerLuna = new float[s.nrLuni];
-		for (int i = 0; i < s.nrLuni; i++){
+		for (int i = 0; i < s.nrLuni; i++) {
 			this->bonusuriPerLuna[i] = s.bonusuriPerLuna[i];
 		}
 		return *this;
@@ -750,13 +751,13 @@ string Farmacist::denumireFarmacie = "Dona";
 
 
 
-class InterfataClient{
+class InterfataClient {
 public:
 	virtual void afisareTipClient() = 0;
 };
 
 
-class Client:public InterfataClient
+class Client :public InterfataClient
 {
 private:
 	const int anNastere;// 1995
@@ -766,7 +767,7 @@ private:
 
 public:
 
-	friend ifstream& operator>>(ifstream & in, Client & m){
+	friend ifstream& operator>>(ifstream& in, Client& m) {
 
 		char buffer[200];
 		in >> buffer;
@@ -778,7 +779,7 @@ public:
 		return in;
 	}
 
-	friend ofstream& operator<<(ofstream& out, Client m){
+	friend ofstream& operator<<(ofstream& out, Client m) {
 
 		out << m.nume << endl;
 
@@ -794,7 +795,7 @@ public:
 		cout << "Acesta e client normal" << endl;
 	}
 
-	friend istream& operator>>(istream & in, Client & m){
+	friend istream& operator>>(istream& in, Client& m) {
 		cout << "Da nume: ";
 
 		char buffer[200];
@@ -808,31 +809,31 @@ public:
 	}
 
 
-	Client& operator -=(int p){
-		if (this->puncteFidelitate - p >= 0){
+	Client& operator -=(int p) {
+		if (this->puncteFidelitate - p >= 0) {
 			this->puncteFidelitate -= p;
 		}
-		else{
+		else {
 			this->puncteFidelitate = 0;
 		}
-		return *this; 
+		return *this;
 	}
 
-	bool operator>(Client c){
+	bool operator>(Client c) {
 		return this->puncteFidelitate > c.puncteFidelitate;
 	}
 
 
-	bool operator==(const char* numeCautat){
-		if (strcmpi(this->nume, numeCautat) == 0){
+	bool operator==(const char* numeCautat) {
+		if (strcmp(this->nume, numeCautat) == 0) {
 			return 1;
 		}
-		else{
+		else {
 			return false;
 		}
 	}
 
-	bool operator!(){
+	bool operator!() {
 		return  (puncteFidelitate > 0);
 	}
 
@@ -842,62 +843,62 @@ public:
 
 
 
-	static void setAnCurent(int ac){
-		if (ac >= 0){
+	static void setAnCurent(int ac) {
+		if (ac >= 0) {
 			Client::anCurent = ac;
 		}
 	}
 
 	void setNume(const char* n)
 	{
-		if (strlen(n) > 2){
+		if (strlen(n) > 2) {
 			delete[] this->nume;
 			this->nume = new char[strlen(n) + 1];
 			strcpy(this->nume, n);
 		}
 	}
 
-	void setPuncteFidelitate(int  p){
-		if (p >= 0){
+	void setPuncteFidelitate(int  p) {
+		if (p >= 0) {
 			this->puncteFidelitate = p;
 		}
 	}
 	//get\
 
-	int getAnNastere(){
+	int getAnNastere() {
 		return this->anNastere;
 	}
-	static int getAnCurent(){
+	static int getAnCurent() {
 		return Client::anCurent;
 	}
-	char* getNume(){
+	char* getNume() {
 		return this->nume;
 	}
-	int getPuncteFidelitate(){
+	int getPuncteFidelitate() {
 		return this->puncteFidelitate;
 	}
 
-	void afisare(){
+	void afisare() {
 		cout << "Varsta " << Client::anCurent - this->anNastere << endl;
 		cout << "Nume client: " << this->nume << endl;
 		cout << "Pucnte " << this->puncteFidelitate << endl;
 	}
 
 
-	friend ostream & operator<<(ostream & out, Client & sursa){
-		 
-		 out << "Nume client: " << sursa.nume << endl;
-		 out << "Pucnte " << sursa.puncteFidelitate << endl;
+	friend ostream& operator<<(ostream& out, Client& sursa) {
+
+		out << "Nume client: " << sursa.nume << endl;
+		out << "Pucnte " << sursa.puncteFidelitate << endl;
 
 		return  out;
 	}
 
-	static void incrementareAn(){
+	static void incrementareAn() {
 		Client::anCurent++;
 	}
 
 
-	~Client(){
+	~Client() {
 		delete[] this->nume;
 	}
 
@@ -917,7 +918,7 @@ public:
 
 	}
 
-	Client&operator=(const Client& s)
+	Client& operator=(const Client& s)
 	{
 		delete[] this->nume;
 		this->nume = new char[strlen(s.nume) + 1];
@@ -928,11 +929,11 @@ public:
 
 	Client(const Client& s) :anNastere(s.anNastere)
 	{
-	 
+
 		this->nume = new char[strlen(s.nume) + 1];
 		strcpy(this->nume, s.nume);
 		this->puncteFidelitate = s.puncteFidelitate;
-		 
+
 	}
 
 
@@ -943,13 +944,13 @@ public:
 		this->puncteFidelitate = 0;
 
 	}
-	friend int getVarsta(Client & c);
+	friend int getVarsta(Client& c);
 
 };
 int Client::anCurent = 2023;
 
 
-int getVarsta(Client & c){
+int getVarsta(Client& c) {
 	return Client::anCurent - c.anNastere;
 }
 
@@ -961,19 +962,19 @@ class ClientOnline :public Client
 	int  nrComenziLaAdresa = 0;
 
 public:
-	  void afisareTipClient() {
+	void afisareTipClient() {
 		cout << "Acesta e client normal online" << endl;
 	}
-	void setnrComenzi(int  p){
-		if (p){
+	void setnrComenzi(int  p) {
+		if (p) {
 			this->nrComenziLaAdresa = p;
 		}
 	}
-	float getnrComenzi(){
+	float getnrComenzi() {
 		return nrComenziLaAdresa;
 	}
 
-	ClientOnline(){
+	ClientOnline() {
 
 	}
 
@@ -982,19 +983,19 @@ public:
 		nrComenziLaAdresa = c;
 	}
 
-	ClientOnline(const ClientOnline & m) :Client(m)
+	ClientOnline(const ClientOnline& m) :Client(m)
 	{
 		nrComenziLaAdresa = m.nrComenziLaAdresa;
 	}
 
-	ClientOnline & operator= (const ClientOnline & m)
+	ClientOnline& operator= (const ClientOnline& m)
 	{
 		Client ::operator=(m);
 		nrComenziLaAdresa = m.nrComenziLaAdresa;
 		return *this;
 	}
 
-	~ClientOnline(){
+	~ClientOnline() {
 
 	}
 
@@ -1007,20 +1008,20 @@ public:
 
 
 
-// Has a cu pointeri ... faza 8 
+//  faza 8 
 class ListaClientiPointeri
 {
 	const int id;
 	string listaClientiDenumire;
 	int nrClienti;
-	Client ** clienti;
+	Client** clienti;
 
 public:
-	friend ostream & operator<<(ostream & out, ListaClientiPointeri & sursa){
+	friend ostream& operator<<(ostream& out, ListaClientiPointeri& sursa) {
 
 		out << "listaClientiDenumire  : " << sursa.listaClientiDenumire << endl;
 		out << "nr mediecamente " << sursa.nrClienti << endl;
-		for (int i = 0; i < sursa.nrClienti; i++){
+		for (int i = 0; i < sursa.nrClienti; i++) {
 			out << *(sursa.clienti[i]) << endl;
 		}
 		return  out;
@@ -1030,7 +1031,7 @@ public:
 
 
 
-	~ListaClientiPointeri(){
+	~ListaClientiPointeri() {
 		delete[] this->clienti;
 	}
 
@@ -1048,8 +1049,8 @@ public:
 	{
 		this->listaClientiDenumire = num;
 		this->nrClienti = nr;
-		this->clienti = new Client*[nr];
-		for (int i = 0; i < nr; i++){
+		this->clienti = new Client * [nr];
+		for (int i = 0; i < nr; i++) {
 			this->clienti[i] = bo[i];
 		}
 
@@ -1058,21 +1059,21 @@ public:
 	{
 		this->listaClientiDenumire = s.listaClientiDenumire;
 		this->nrClienti = s.nrClienti;
-		this->clienti = new Client*[s.nrClienti];
-		for (int i = 0; i < s.nrClienti; i++){
+		this->clienti = new Client * [s.nrClienti];
+		for (int i = 0; i < s.nrClienti; i++) {
 			this->clienti[i] = s.clienti[i];
 		}
 
 	}
 
 
-	ListaClientiPointeri& operator= (const ListaClientiPointeri & s)
+	ListaClientiPointeri& operator= (const ListaClientiPointeri& s)
 	{
 		delete[] this->clienti;
 		this->listaClientiDenumire = s.listaClientiDenumire;
 		this->nrClienti = s.nrClienti;
-		this->clienti = new Client*[s.nrClienti];
-		for (int i = 0; i < s.nrClienti; i++){
+		this->clienti = new Client * [s.nrClienti];
+		for (int i = 0; i < s.nrClienti; i++) {
 			this->clienti[i] = s.clienti[i];
 		}
 		return *this;
@@ -1098,24 +1099,24 @@ int main()// programul principal
 
 
 
-	Medicament m;
-	Client c;
-	Farmacist f;
+	//Medicament m;
+	//Client c;
+	//Farmacist f;
 
 
 
-	Medicament m1("paracetamol", 23);
-	Client c1("gigel", 1992, 232);
-	Farmacist f1(1, "Costelush", 2, new float[2]{5.4f, 6.6f});
+	//Medicament m1("paracetamol", 23);
+	//Client c1("alexandru", 1992, 232);
+	//Farmacist f1(1, "alina", 2, new float[2]{5.4f, 6.6f});
 
-	Medicament m2("aspirina");
-	Client c2("titelush", 1992);
-	Farmacist f2(1, "Cornelush");
+	//Medicament m2("aspirina");
+	//Client c2("irina", 1992);
+	//Farmacist f2(1, "maria");
 
 
 	//cout << "Nr de medicamente este: " << Medicament::getNrMedicamente() << endl;
-	Farmacist::schimbaDenumire("la Medicamentul vois");
-	Client::incrementareAn();
+	//Farmacist::schimbaDenumire("la Medicamentul paracetamol");
+	//Client::incrementareAn();
 
 
 	//m.afisare();
@@ -1130,9 +1131,9 @@ int main()// programul principal
 	//f1.afisare();
 	//f2.afisare();
 
-	m.setDenumire("Penicilina");
-	m.setPret(23.3f);
-	Medicament::setContor(0);
+	//m.setDenumire("Penicilina");
+	//m.setPret(23.3f);
+	//Medicament::setContor(0);
 
 	//cout << m.getDenumire() << endl;
 	//cout << m.getId() << endl;
@@ -1140,9 +1141,9 @@ int main()// programul principal
 	//cout << m.getPret() << endl;
 
 
-	f.setDenumireFarmacie("CostelFarm");
-	f.setNrLuni(2, new float[2]{4.5f, 3.4f});
-	f.setNume("Toma");
+	//f.setDenumireFarmacie("BIOFarma");
+	//f.setNrLuni(2, new float[2]{4.5f, 3.4f});
+	//f.setNume("Toma");
 
 	//cout << f.getNume() << endl;
 	//cout << Farmacist::getFarmacie() << endl;
@@ -1152,9 +1153,9 @@ int main()// programul principal
 
 
 
-	Client::setAnCurent(2025);
-	c.setNume("Marinush");
-	c.setPuncteFidelitate(123);
+	//Client::setAnCurent(2025);
+	//c.setNume("Marinush");
+	//c.setPuncteFidelitate(123);
 
 	//cout << Client::getAnCurent() << endl;
 	//cout << c.getAnNastere() << endl;
@@ -1167,103 +1168,103 @@ int main()// programul principal
 	//cout << "Varsta este " << getVarsta(c) << endl;
 
 
-	//// op = 
-	f = f1;
-	c = c1;
-	m = m1;
+	// //op = 
+	//f = f1;
+	//c = c1;
+	//m = m1;
 
 
-	//// operatoro
+	//// operatori
 	//cout << m;
-	m = m + 12;
-	++m;
-	m(13);
+	//m = m + 12;
+	//++m;
+	//m(13);
 
-	//// 
-	//// cin >> f;//il tinem comentat sa nu ne puna mereu sa bagam de la tastatura cand facem debug
-	f += 12;
-	f++;
+	// 
+	// cin >> f;
+	//f += 12;
+	//f++;
 	//cout << f[1] << endl;
 
 
-	/////
-	if (c == ("Gigel")){
-		//cout << "Da pe f il cheama gigel" << endl;
-	}
-	else{
-		//cout << "Pe f nu il cheama gigel" << endl;
-	}
+	//
+	//if (c == ("Ioana")){
+	//	cout << "Numele clientului este Ioana" << endl;
+	//}
+	//else{
+	//	cout << "Clientul are alt nume" << endl;
+	//}
 
-	if (!c){
-		//cout << "C nu are 0 puncte" << endl;
-	}
+	//if (!c){
+	//	cout << "Clientul 0 nu are 0 puncte" << endl;
+	//}
 
-	if (c > c1){
-		//cout << "C are mai multe puncte c1" << endl;
-	}
-	else{
-		//cout << "C nu are mai multe pucnte ca c1" << endl;
-	}
+	//if (c > c1){
+	//	cout << "Clientul 0 are mai multe puncte decat clientul 1" << endl;
+	//}
+	//else{
+	//	cout << "Clientul 0 nu are mai multe pucnte ca clientul 1" << endl;
+	//}
 
-	  c -= 12;
-
-
-
-
-	  //FAZA 4
-	  
-	  Medicament vm[3];
-	  Client vc[3];
-	  Farmacist vf[3];
-
-	  for (int i = 0; i < 3; i++){
-		//  cin >> vm[i];
-	  }
-
-	  for (int i = 0; i < 3; i++){
-		//  cin >> vc[i];
-	  }
-
-	  for (int i = 0; i < 3; i++){
-		  //cin >> vf[i];
-	  }
-
-	  for (int i = 0; i < 3; i++){
-		 // cout << vm[i];
-	  }
-
-	  for (int i = 0; i < 3; i++){
-		 // cout << vc[i];
-	  }
-
-	  for (int i = 0; i < 3; i++){
-		//  cout << vf[i];
-	  }
-
-
-
-	  Farmacist matfar[3][3];
-	  for (int i = 0; i < 3; i++){
-		  for (int j = 0; j < 3; j++){
-			 // cin >> matfar[i][j];
-		  }
-	  }
-
-
-	  for (int i = 0; i < 3; i++){
-		  for (int j = 0; j < 3; j++){
-			// cout<< matfar[i][j];
-		  }
-	  }
+	//  c -= 12;
 
 
 
 
-	  //faza 5
+	//  //FAZA 4
+	//  
+	//  Medicament vm[3];
+	//  Client vc[3];
+	//  Farmacist vf[3];
+
+	//  for (int i = 0; i < 3; i++){
+	//	 cin >> vm[i];
+	//  }
+
+	//  for (int i = 0; i < 3; i++){
+	//	/ cin >> vc[i];
+	//  }
+
+	//  for (int i = 0; i < 3; i++){
+	//	  cin >> vf[i];
+	//  }
+
+	//  for (int i = 0; i < 3; i++){
+	//	  cout << vm[i];
+	//  }
+
+	//  for (int i = 0; i < 3; i++){
+	//	  cout << vc[i];
+	//  }
+
+	//  for (int i = 0; i < 3; i++){
+	//	 cout << vf[i];
+	//  }
+
+
+
+	//  Farmacist matfar[3][3];
+	//  for (int i = 0; i < 3; i++){
+	//	  for (int j = 0; j < 3; j++){
+	//		 cin >> matfar[i][j];
+	//	  }
+	//  }
+
+
+	//  for (int i = 0; i < 3; i++){
+	//	  for (int j = 0; j < 3; j++){
+	//		cout<< matfar[i][j];
+	//	  }
+	//  }
+
+
+
+
+	//  //faza 5
 
 	  ListaMedicamente lm;
 	  
-	  ListaMedicamente lm1(121,"titel", 3, vm);
+	  ListaMedicamente lm1(121,"marin", 3, vm);
 	  ListaMedicamente lm2(lm1);
 	  lm = lm1;
 	  lm1.getMedicamente();
@@ -1276,52 +1277,52 @@ int main()// programul principal
 	  lm1 += m;
 	 
 
-	  // faza 6
+	//  // faza 6
 
-	  // - 
-	  ofstream fout;
-	  fout.open("fisermedi.txt", ofstream::out);
-	  if (fout.is_open()){
-		  fout << m1;
-		  fout.close();
-	  }
+	//  // text 
+	//  ofstream fout;
+	//  fout.open("fisermedi.txt", ofstream::out);
+	//  if (fout.is_open()){
+	//	  fout << m1;
+	//	  fout.close();
+	//  }
 
-	 ifstream fin;
-	 fin.open("fisermedi.txt", ifstream::in);
-	 if (fin.is_open()){
-		 fin >> m1;
-		 fin.close();
-	  }
+	// ifstream fin;
+	// fin.open("fisermedi.txt", ifstream::in);
+	// if (fin.is_open()){
+	//	 fin >> m1;
+	//	 fin.close();
+	//  }
 
-	 ofstream fout1;
-	 fout1.open("fiserclie.txt", ofstream::out);
-	 if (fout1.is_open()){
-		 fout1 << c1;
-		 fout1.close();
-	 }
+	// ofstream fout1;
+	// fout1.open("fiserclie.txt", ofstream::out);
+	// if (fout1.is_open()){
+	//	 fout1 << c1;
+	//	 fout1.close();
+	// }
 
-	 ifstream fin1;
-	 fin1.open("fiserclie.txt", ifstream::in);
-	 if (fin1.is_open()){
-		 fin1 >> c1;
-		 fin1.close();
-	 }
+	// ifstream fin1;
+	// fin1.open("fiserclie.txt", ifstream::in);
+	// if (fin1.is_open()){
+	//	 fin1 >> c1;
+	//	 fin1.close();
+	// }
 
 
-	 //binar 
-	 ofstream fout2;
-	 fout2.open("farmacie.bin", ofstream::binary);
-	 if (fout2.is_open()){
-		 fout2 << f1;
-		 fout2.close();
-	 }
+	// //binar 
+	// ofstream fout2;
+	// fout2.open("farmacie.bin", ofstream::binary);
+	// if (fout2.is_open()){
+	//	 fout2 << f1;
+	//	 fout2.close();
+	// }
 
-	 ifstream fin2;
-	 fin2.open("farmacie.bin", ifstream::binary);
-	 if (fin2.is_open()){
-		 fin2 >> f1;
-		 fin2.close();
-	 }
+	// ifstream fin2;
+	// fin2.open("farmacie.bin", ifstream::binary);
+	// if (fin2.is_open()){
+	//	 fin2 >> f1;
+	//	 fin2.close();
+	// }
 
 
 
@@ -1340,68 +1341,68 @@ int main()// programul principal
 
 
 	  //faza 7 
-	  ClientOnline cf;
-	  ClientOnline cf1("tite", 23, 23);
-	  ClientOnline cf2(cf1);
-	  cf = cf1;
-	 // cout << (Client)cf1; // upcasting
-	  cf1.getnrComenzi();
-	  cf1.setnrComenzi(23);
-	  
-
-	  MedicamentCompensat mcp;
-	  MedicamentCompensat mcp1("paracetamol",23,12);
-	  MedicamentCompensat mcp2(mcp1);
-	  mcp = mcp2;
-	//   cout << (Medicament)mcp2; // upcasting
-	  mcp.setValCom(2);
-	  mcp.getValComp();
+	//ClientOnline cf;
+	//ClientOnline cf1("mihai", 23, 23);
+	//ClientOnline cf2(cf1);
+	//cf = cf1;
+	//cout << (Client)cf1; // upcasting
+	//cf1.getnrComenzi();
+	//cf1.setnrComenzi(23);
 
 
+	//MedicamentCompensat mcp;
+	//MedicamentCompensat mcp1("paracetamol", 23, 12);
+	//MedicamentCompensat mcp2(mcp1);
+	//mcp = mcp2;
+	//cout << (Medicament)mcp2; // upcasting
+	//mcp.setValCom(2);
+	//mcp.getValComp();
 
 
 
-	  // faza 8 
-	  InterfataMedicament * vifm[10]
-	  {		new Medicament(),
-	  new MedicamentCompensat(),
-	  new MedicamentCompensat(),
-	  new MedicamentCompensat(),
-	  &m,
-	  &m1,
-	  &m2,
-	  &mcp,
-	  &mcp1,
-	  &mcp2,
-
-	  };
 
 
-	  for (int i = 0; i < 10; i++){
-		  vifm[i]->afisareTipMedicament();
-	  }
+	// faza 8 
+	/*InterfataMedicament * vifm[10]
+	{		new Medicament(),
+	new MedicamentCompensat(),
+	new MedicamentCompensat(),
+	new MedicamentCompensat(),
+	&m,
+	&m1,
+	&m2,
+	&mcp,
+	&mcp1,
+	&mcp2,
+
+	};
 
 
-	  InterfataClient * vcointer[10]
-	  {		new Client(),
-	  new ClientOnline(),
-	  new Client(),
-	  new ClientOnline(),
-	  &c,
-	  &c1,
-	  &c1,
-	  &c2,
-	  &cf,
-	  &cf2
-
-	  };
+	for (int i = 0; i < 10; i++){
+		vifm[i]->afisareTipMedicament();
+	}
 
 
-	  for (int i = 0; i < 10; i++){
-		  vcointer[i]->afisareTipClient();
-	  }
+	InterfataClient * vcointer[10]
+	{		new Client(),
+	new ClientOnline(),
+	new Client(),
+	new ClientOnline(),
+	&c,
+	&c1,
+	&c1,
+	&c2,
+	&cf,
+	&cf2
+
+	};
 
 
+	for (int i = 0; i < 10; i++){
+		vcointer[i]->afisareTipClient();
+	}
+*/
 
-	return 0;
+
+//return 0;
 }
